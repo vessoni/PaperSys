@@ -1,0 +1,134 @@
+{include file="includes/topo.html"}
+{include file="includes/menu.html"}
+{literal}
+<script language="javascript">
+
+function somente_txt(par_tecla)
+{
+         var var_tecla = par_tecla.keyCode ? par_tecla.keyCode : par_tecla.which;
+         /* Tecla Backspace */
+		 if (var_tecla == 9)
+                  {return true;}
+         if (var_tecla == 8)
+                  {return true;}
+         /* Tecla Space */
+         if (var_tecla == 32)
+                  {return true;}
+         /* Teclas a-z e A-Z */
+         if ((var_tecla > 64 && var_tecla < 91) || (var_tecla > 96 && var_tecla < 123))
+                  {return true;}
+         /* Teclas acentuadas e cidilha */
+         if ((var_tecla > 191 && var_tecla < 221) || (var_tecla > 223 && var_tecla < 253))
+                  {return true;}
+         return false;
+}
+function SomenteNumero(e){
+ var tecla=(window.event)?event.keyCode:e.which;
+ if((tecla>47 && tecla<58)) return true;
+ else{
+ if (tecla==8 || tecla==0) return true;
+ else  return false;
+ }
+}
+</script>  
+{/literal}	
+	<section id="main" class="column">
+		
+		<article class="module width_full">
+		<header><h3 class="tabs_involved">Pais</h3>
+		<ul class="tabs">
+   			<li><a href="/estagio/pais/">Lista</a></li>
+    		<li><a href="#tab2">Novo</a></li>
+		</ul>
+		</header>
+
+		<div class="tab_container">
+			<div id="tab1" class="tab_content" {if $edit == 'false'}style="display: block;" {else} style="display: none;" {/if}>
+			<table class="tablesorter" cellspacing="0"> 
+			<thead> 
+				<tr>
+				<div class="module_content">				
+					<fieldset>
+						<label>Buscar</label>
+						<input type="text">
+                        <input type="submit" value="Buscar" style="float:left">
+					</fieldset>
+				</div>					
+				</tr> 		
+				<tr> 
+   					<th></th> 
+    				<th>Codigo</th> 
+    				<th>Pais</th> 
+    				<th>Sigla</th> 
+					<th>DDI</th>
+					<th></th> 
+    				<th>Ação</th> 
+				</tr> 
+			</thead> 
+			<tbody> 
+		{foreach from = $pais item=p}
+                <tr> 
+   					<td><input type="checkbox"></td> 
+    				<td>{$p->id}</td> 
+    				<td>{$p->nome|upper}</td> 
+					<td>{$p->sigla|upper}</td> 
+					<td>{$p->ddi|upper}</td> 
+    				<td></td>  
+                    <td>
+                         <a href="/estagio/pais/novopais/{$p->id}/edit"><img src="/estagio/static/img/icn_edit.png" /></a>
+                         <a href="/estagio/pais/novopais/{$p->id}/delete" onClick="return confirm('Deseja realmente excluir?');"><img src="/estagio/static/img/icn_trash.png" /></a>
+                    </td> 
+				</tr> 
+          {/foreach}
+           		 
+			</tbody> 
+			</table>
+			</div><!-- end of #tab1 -->
+			
+		<div id="tab2" class="tab_content" {if $edit == 'true'} style="display: block;" {else} style="display: none;" {/if}>
+			{if isset($erros)} 
+
+				<h4 class="alert_error"  onClick="$('#alert_error').hide();">
+					Algo aconteceu errado, verifique: <br>
+						 {foreach from=$erros item=erro}
+						 <div style="margin-left: 10px;"> - {$erro}</div>
+						 {/foreach}
+				</h4>
+			{/if}
+				<div class="module_content">
+                  <form action="/estagio/pais/novopais" method="post" enctype="multipart/form-data">  
+                    	<fieldset style="width:550px; float:left; margin-right: 3%;">
+                         	<label style="width:10%;">Codigo</label>
+							<label style="width:55%">Pais*</label>
+							<label style="width:12%">Sigla*</label>
+							<label style="width:15%">DDI*</label>
+                             <input style="width:6%;"type="text" name="id" value="{if isset($paises)}{$paises->id}{/if}" readonly="readonly">
+							<input style="width:50%;text-transform:uppercase"type="text" name="pais" value="{if isset($paises)}{$paises->nome}{/if} {if count($smarty.post) > 0}{$smarty.post.pais}{/if}"   maxlength="40"  onkeypress="return somente_txt(event);" >
+							<input style="width:7%;text-transform:uppercase"type="text" name="sigla" value="{if isset($paises)}{$paises->sigla}{/if}{if count($smarty.post) > 0}{$smarty.post.sigla}{/if}"  maxlength="3" onkeypress="return somente_txt(event);">
+							<input style="width:7%;text-transform:uppercase"type="text" name="ddi" value="{if isset($paises)}{$paises->ddi}{/if}{if count($smarty.post) > 0}{$smarty.post.ddi}{/if}" onkeypress="return SomenteNumero(event);"  maxlength="2">
+						</fieldset>
+
+						
+							<input type="submit" value="{if isset($paises)} Editar {else}Salvar {/if}" style="float:left">
+				  </form>
+
+<div class="clear"></div>
+				</div>
+
+		</div><!-- end of #tab2 -->
+
+			
+		</div><!-- end of .tab_container -->
+		
+		</article><!-- end of content manager article -->
+		
+		
+		<div class="clear"></div>
+		
+	
+	</section>
+
+
+</body>
+
+</html>

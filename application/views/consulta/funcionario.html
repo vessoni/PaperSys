@@ -1,0 +1,303 @@
+{include file="includes/topo.html"}
+{include file="includes/menu.html"}
+<link rel="stylesheet" type="text/css" href="http://localhost/estagio/static/js/shadowbox.css">
+<script type="text/javascript" src="http://localhost/estagio/static/js/shadowbox.js"></script>
+<script type="text/javascript" src="http://localhost/estagio/static/js/validacao.js"></script>
+<script type="text/javascript">
+Shadowbox.init({  
+	language: 'pt',  
+	player: ['img', 'html', 'swf']  
+});
+{literal}
+function somente_txt(par_tecla)
+{
+         var var_tecla = par_tecla.keyCode ? par_tecla.keyCode : par_tecla.which;
+         /* Tecla Backspace */
+         if (var_tecla == 8)
+                  {return true;}
+		
+		         if (var_tecla == 9)
+                  {return true;}		  
+         /* Tecla Space */
+         if (var_tecla == 32)
+                  {return true;}
+         /* Teclas a-z e A-Z */
+         if ((var_tecla > 64 && var_tecla < 91) || (var_tecla > 96 && var_tecla < 123))
+                  {return true;}
+         /* Teclas acentuadas e cidilha */
+         if ((var_tecla > 191 && var_tecla < 221) || (var_tecla > 223 && var_tecla < 253))
+                  {return true;}
+         return false;
+}
+function SomenteNumero(e){
+ var tecla=(window.event)?event.keyCode:e.which;
+ if((tecla>47 && tecla<58)) return true;
+ else{
+ if (tecla==8 || tecla==0) return true;
+ else  return false;
+ }
+}
+function verificarCPF(c){
+    var i;
+    s = c;
+    var c = s.substr(0,9);
+    var dv = s.substr(9,2);
+    var d1 = 0;
+    var v = false;
+ 
+    for (i = 0; i < 9; i++){
+        d1 += c.charAt(i)*(10-i);
+    }
+    if (d1 == 0){
+        alert("CPF Inválido")
+        v = true;
+        return false;
+    }
+    d1 = 11 - (d1 % 11);
+    if (d1 > 9) d1 = 0;
+    if (dv.charAt(0) != d1){
+        alert("CPF Inválido")
+        v = true;
+        return false;
+    }
+ 
+    d1 *= 2;
+    for (i = 0; i < 9; i++){
+        d1 += c.charAt(i)*(11-i);
+    }
+    d1 = 11 - (d1 % 11);
+    if (d1 > 9) d1 = 0;
+    if (dv.charAt(1) != d1){
+        alert("CPF Inválido")
+        v = true;
+        return false;
+    }
+    if (!v) {
+      
+    }
+}
+
+jQuery(function($){
+   $("#cpf").mask("999.999.999-99");
+   $("#cep").mask("99999-999"); 
+
+   $("#tel").mask("(99)9999-9999"); 
+   $("#tel1").mask("(99)9999-9999");
+   $("#tel2").mask("(99)9999-9999");
+   $("#money").mask('000.000.000.000.000,00', {reverse: true});
+    $("#money2").mask('000.000.000.000.000,00', {reverse: true});
+ });
+</script>
+ <script>
+$(function() {
+    $("#data_nascimento").datepicker({
+       changeMonth: true, changeYear: true, yearRange: '1950:2010',
+		dateFormat: 'dd/mm/yy',
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
+  
+    });
+    $("#data_admissao").datepicker({
+       changeMonth: true, changeYear: true, yearRange: '1950:2010',
+		dateFormat: 'dd/mm/yy',
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
+  
+    });
+    $("#data_demissao").datepicker({
+       changeMonth: true, changeYear: true, yearRange: '1950:2010',
+		dateFormat: 'dd/mm/yy',
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
+  
+    });		
+});
+</script>
+{/literal}
+	<section id="main" class="column">
+		
+		<article class="module width_full">
+		<header><h3 class="tabs_involved">Funcionario</h3>
+		<ul class="tabs">
+   			<li><a href="/estagio/funcionario/">Lista</a></li>
+    		<li><a href="#tab2">Novo</a></li>
+		</ul>
+		</header>
+
+		<div class="tab_container">
+			<div id="tab1" class="tab_content" {if $edit == 'false'} style="display: block;" {else} style="display: none;" {/if}>
+			<table class="tablesorter" cellspacing="0"> 
+			<thead> 
+				<tr>
+				<div class="module_content">				
+					<fieldset>
+						<label>Buscar</label>
+						<input type="text">
+                        <input type="submit" value="Buscar" style="float:left">
+					</fieldset>
+				</div>					
+				</tr> 		
+				<tr> 
+   					<th></th> 
+    				<th>Codigo</th> 
+    				<th>Nome</th> 
+					<th></th> 
+    				<th>Ação</th> 
+				</tr> 
+			</thead> 
+			<tbody> 
+			        {foreach from = $funcionario item=e}
+                        <tr> 
+                            <td><input type="checkbox"></td> 
+                            <td>{$e->id}</td> 
+                            <td>{$e->nome|upper}</td> 
+
+                            <td></td>  
+                            <td>
+                                 <a href="/estagio/funcionario/novofuncionario/{$e->id}/edit"><img src="/estagio/static/img/icn_edit.png" /></a>
+                                 <a href="/estagio/funcionario/novofuncionario/{$e->id}/delete" onClick="return confirm('Deseja realmente excluir?');"><img src="/estagio/static/img/icn_trash.png" /></a>
+                            </td> 
+                        </tr> 
+                  {/foreach}
+			</tbody> 
+			</table>
+			</div><!-- end of #tab1 -->
+			
+		<div id="tab2" class="tab_content" {if $edit == 'true'} style="display: block;" {else} style="display: none;" {/if}>
+            {if isset($erros)} 
+
+          <h4 class="alert_error"  onClick="$('#alert_error').hide();">
+            Algo aconteceu errado, verifique: <br>
+               {foreach from=$erros item=erro}
+               <div style="margin-left: 10px;"> - {$erro}</div>
+               {/foreach}
+          </h4>
+        {/if}
+				<div class="module_content">
+               <form action="/estagio/funcionario/novoFuncionario" method="post" enctype="multipart/form-data">    
+						<fieldset style="width:900px; float:left; margin-right: 2%;">
+							<!-- Inicio primeira linha -->
+                                <label style="width:9%; float:left;">Codigo</label>
+                                <label style="width:30%;float:left;">Funcionario*</label>
+                                <label style="width:15%;float:left;">Data Nascimento</label>
+                                <label style="width:20%;float:left;">Sexo*</label>
+                                 <label style="width:15%;float:left;"></label>
+                                <input style="width:6%;float:left;margin-bottom:10px" type="text" name="id" value="{if isset($funcionarios)}{$funcionarios->id}{/if}" readonly="readonly">
+                                <input style="width:28%;float:left;margin-bottom:10px;text-transform:uppercase"type="text" name="nome" maxlength="100"  onkeypress="return somente_txt(event);" value="{if isset($funcionarios)}{$funcionarios->nome}{/if}{if count($smarty.post) > 0}{$smarty.post.nome}{/if}" required="required">
+                               <input style="width:12%;float:left;margin-bottom:10px;text-transform:uppercase;"type="text" id="data_nascimento" name="data_nascimento" value="{if isset($funcionarios)}{$funcionarios->data_nascimento}{/if}{if count($smarty.post) > 0}{$smarty.post.data_nascimento}{/if}" readonly="readonly" >
+                                <div style="width:21%;float:left;margin-bottom:10px;height:30px">
+                                    <input type="radio" required  name="sexo" value="m" {if isset($funcionarios)}{$funcionarios->sexo == 'f'}checked{else}{/if}> Masculino &nbsp;
+                                    <input type="radio" required  name="sexo" value="f" {if isset($funcionarios)}{$funcionarios->sexo == 'm'}checked{else}{/if} >Feminino
+                                </div>
+                                <label style="width:15%;float:left;"></label>
+                            <!--Fim primeira linha -->                        
+                         	<!-- Inicio primeira linha -->
+   								<label style="width:35%; float:left;">Logradouro*</label>
+                             	  <label style="width:14%;float:left;">Numero*</label>
+                                <label style="width:15%;float:left;">Complemento</label>
+                                 <label style="width:30%;float:left;">Bairro*</label>
+                                <input style="width:32%;float:left;margin-bottom:10px;text-transform:uppercase"type="text" name="logradouro" maxlength="40"  onkeypress="return somente_txt(event);" value="{if isset($funcionarios)}{$funcionarios->logradouro}{/if}{if count($smarty.post) > 0}{$smarty.post.logradouro}{/if}" required="required">
+                                <input style="width:12%;float:left;margin-bottom:10px"type="text" name="numero"   maxlength="10" id="numero" onkeypress="return SomenteNumero(event);" value="{if isset($funcionarios)}{$funcionarios->numero}{/if}{if count($smarty.post) > 0}{$smarty.post.numero}{/if}" required="required">
+                                <input style="width:12%;float:left; margin-bottom:10px;text-transform:uppercase"type="text"name="complemento" maxlength="20" value="{if isset($funcionarios)}{$funcionarios->complemento}{/if}{if count($smarty.post) > 0}{$smarty.post.complemento}{/if}">
+                            	 <input style="width:28%;float:left;margin-bottom:10px;text-transform:uppercase"type="text" name="bairro" maxlength="20"  onkeypress="return somente_txt(event);"value="{if isset($funcionarios)}{$funcionarios->bairro}{/if}{if count($smarty.post) > 0}{$smarty.post.bairro}{/if}" required="required">
+                            <!--Fim primeira linha -->
+                            <!-- Inicio Segunda linha -->
+                             <label style="width:15%; float:left;">Cep</label>
+								<label style="width:30%; float:left;">Cidade*</label>
+                                <label style="width:16%;float:left;"></label>
+                                <label style="width:30%;float:left;">Estado</label>
+                                 <input style="width:12%;float:left;margin-bottom:10px"type="text" onkeypress="return SomenteNumero(event);" name="cep" id="cep" value="{if isset($funcionarios)}{$funcionarios->cep}{/if}{if count($smarty.post) > 0}{$smarty.post.cep}{/if}">
+                              <a href="http://localhost/estagio/cidade/teste" rel="shadowbox;width=800;height=600;">
+                                <input style="width:6%;"type="hidden" name="cidade_id" id="cidade_id" value="{if isset($funcionarios)}{$funcionarios->cidade_id}{/if}{if count($smarty.post) > 0}{$smarty.post.cidade_id}{/if}" readonly="readonly">
+                                <input style="width:32%;float:left;margin-bottom:10px;text-transform:uppercase"type="text" name="cidade" id="cidade"value="{if isset($funcionarios)}{$funcionarios->cidade->nome}{/if}{if count($smarty.post) > 0}{$smarty.post.cidade}{/if}" required="required" readonly="readonly">
+                                <div style="width:12%;float:left;margin-bottom:10px;height:20px; margin-left:11px" >
+                                	<input type="submit" value="Buscar" />
+                                </div> 
+                              </a>
+                             <a href="http://localhost/estagio/pais/teste" rel="shadowbox;width=800;height=600;">                                
+                                <input style="width:32%;float:left;margin-bottom:10px;text-transform:uppercase"type="text" name="estado" id="estado" value="{if isset($funcionarios)}{$funcionarios->cidade->estado->nome}{/if}" required="required" readonly="readonly">
+                             </a>
+                            
+                            <!-- Inicio Quarta linha -->
+                                <label style="width:15%; float:left;">Tel. Residencial</label>
+                                <label style="width:15%;float:left;">Tel. Comercial</label>
+                                <label style="width:14%;float:left;">Celular</label>
+                                <label style="width:40%;float:left;">Email</label>
+                                <input style="width:12%;float:left;margin-bottom:10px"type="text"name="tel_residencial" onkeypress="return SomenteNumero(event);" id="tel" value="{if isset($funcionarios)}{$funcionarios->tel_residencial}{/if}{if count($smarty.post) > 0}{$smarty.post.tel_residencial}{/if}">
+                                <input style="width:12%;float:left;margin-bottom:10px"type="text"name="tel_comercial" onkeypress="return SomenteNumero(event);" id="tel1" value="{if isset($funcionarios)}{$funcionarios->tel_comercial}{/if}{if count($smarty.post) > 0}{$smarty.post.tel_comercial}{/if}" >
+                                <input style="width:12%;float:left;margin-bottom:10px"type="text"name="celular" onkeypress="return SomenteNumero(event);" id="tel2" value="{if isset($funcionarios)}{$funcionarios->celular}{/if}{if count($smarty.post) > 0}{$smarty.post.celular}{/if}">
+                                <input style="width:48%;float:left; margin-bottom:10px;text-transform:uppercase"type="text"name="email" maxlength="50" value="{if isset($funcionarios)}{$funcionarios->email}{/if}{if count($smarty.post) > 0}{$smarty.post.email}{/if}" >                             
+                            <!-- Fim Quarta linha -->
+                            
+                            <!-- Inicio Quinta linha -->
+                                <label style="width:18%; float:left;">Cargo*</label>
+                                <label style="width:10%;float:left;"></label>
+                                <label style="width:14%;float:left;">Salário*</label>
+                                <label style="width:15%;float:left;">Comissao*</label>
+                                <label style="width:14%;float:left;">Data Admissão</label>
+                                <label style="width:15%;float:left;">Data Demissão</label>
+                                <a href="http://localhost/estagio/cargo/teste" rel="shadowbox;width=800;height=600;">
+                                <input style="width:15%;float:left;margin-bottom:10px;text-transform:uppercase"type="hidden" id="cargo_id" name="cargo_id" value="{if isset($funcionarios)}{$funcionarios->cargo->id}{/if}{if count($smarty.post) > 0}{$smarty.post.cargo_id}{/if}">
+                                    <input style="width:15%;float:left;margin-bottom:10px"type="text" id="cargo" name="cargo" value="{if isset($funcionarios)}{$funcionarios->cargo->nome}{/if}{if count($smarty.post) > 0}{$smarty.post.cargo}{/if}" required="required" readonly="readonly">
+                                    <div style="width:10%;float:left;height:30px; margin-left:11px ">
+                                        <input type="submit" value="Buscar" />
+                                    </div>  
+                                </a>   
+                                <input style="width:12%;float:left;margin-bottom:10px"  onkeypress="return SomenteNumero(event);"type="text"name="salario" id="money" value="{if isset($funcionarios)}{$funcionarios->salario}{/if}{if count($smarty.post) > 0}{$smarty.post.salario}{/if}" required="required">
+                                <input style="width:12%;float:left;margin-bottom:10px"  onkeypress="return SomenteNumero(event);"type="text"name="comissao"  id="money2" value="{if isset($funcionarios)}{$funcionarios->comissao}{/if}{if count($smarty.post) > 0}{$smarty.post.comissao}{/if}" required="required">
+                                <input style="width:12%;float:left;margin-bottom:10px"type="text"name="data_admissao" id="data_admissao"value="{if isset($funcionarios)}{$funcionarios->data_admissao}{/if}" required="required" readonly="readonly">
+                                <input style="width:12%;float:left; margin-bottom:10px"type="text"name="data_demissao"  id="data_demissao" value="{if isset($funcionarios)}{$funcionarios->data_demissao}{/if}" readonly="readonly" >
+                            <!-- Fim Quinta linha -->
+                            
+                            <!-- Inicio Sexta linha -->  
+                                <label style="width:22%;float:left;">Carteira de Trabalho</label>
+                                <label style="width:14%; float:left;">CPF</label>
+                                <label style="width:14%;float:left;">RG</label>
+                                <label style="width:40%;float:left;"></label>
+                                <input style="width:19%;float:left;margin-bottom:10px"type="text"name="clt" maxlength="20" onkeypress="return SomenteNumero(event);" value="{if isset($funcionarios)}{$funcionarios->clt}{/if}{if count($smarty.post) > 0}{$smarty.post.clt}{/if}" required="required">
+                                <input style="width:11%;float:left;margin-bottom:10px"type="text"name="cpf" id="cpf" onkeypress="return SomenteNumero(event);" value="{if isset($funcionarios)}{$funcionarios->cpf}{/if}{if count($smarty.post) > 0}{$smarty.post.cpf}{/if}">
+                                <input style="width:12%;float:left;margin-bottom:10px"type="text"name="rg" maxlength="20" onkeypress="return SomenteNumero(event);" value="{if isset($funcionarios)}{$funcionarios->rg}{/if}{if count($smarty.post) > 0}{$smarty.post.rg}{/if}">
+                               
+                            <!-- Fim Sexta linha -->  
+                           
+                           <!-- Inicio Setima linha -->   
+                               <label style="width:100%; float:left;">Obs.</label>
+                               <textarea name="obs" maxlength="255"  style="text-transform:uppercase">{if isset($funcionarios)}{$funcionarios->obs}{/if}{if count($smarty.post) > 0}{$smarty.post.obs}{/if}</textarea>
+                            <!-- Fim Setima linha --> 
+                            
+						</fieldset>
+
+						
+			<input type="submit" value="Salvar" style="float:left">
+            
+            </form>
+
+<div class="clear"></div>
+				</div>
+
+		</div><!-- end of #tab2 -->
+
+			
+		</div><!-- end of .tab_container -->
+		
+		</article><!-- end of content manager article -->
+		
+		
+		<div class="clear"></div>
+		
+	
+	</section>
+
+
+</body>
+
+</html>

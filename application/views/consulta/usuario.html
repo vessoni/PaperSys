@@ -1,0 +1,117 @@
+{include file="includes/topo.html"}
+{include file="includes/menu.html"}
+<link rel="stylesheet" type="text/css" href="http://localhost/estagio/static/js/shadowbox.css">
+<script type="text/javascript" src="http://localhost/estagio/static/js/shadowbox.js"></script>
+<script type="text/javascript">
+Shadowbox.init({  
+	language: 'pt',  
+	player: ['img', 'html', 'swf']  
+});
+</script>
+	
+	<section id="main" class="column">
+		
+		<article class="module width_full">
+		<header><h3 class="tabs_involved">Usuario</h3>
+		<ul class="tabs">
+   			<li><a href="/estagio/usuario/">Lista</a></li>
+    		<li><a href="#tab2">Novo</a></li>
+		</ul>
+		</header>
+
+		<div class="tab_container">
+			<div id="tab1" class="tab_content" {if $edit == 'false'} style="display: block;" {else} style="display: none;" {/if}>
+			<table class="tablesorter" cellspacing="0"> 
+			<thead> 
+				<tr>
+				<div class="module_content">				
+					<fieldset>
+						<label>Buscar</label>
+						<input type="text">
+                        <input type="submit" value="Buscar" style="float:left">
+					</fieldset>
+				</div>					
+				</tr> 		
+				<tr> 
+   					<th></th> 
+    				<th>Codigo</th> 
+                    <th>Nome</th> 
+    				<th>Login</th> 
+					<th></th> 
+    				<th>Ação</th> 
+				</tr> 
+			</thead> 
+			<tbody>
+				    {foreach from = $usuario item=u}
+                        <tr> 
+                            <td><input type="checkbox"></td> 
+                            <td>{$u->id}</td> 
+                             <td>{$u->nome}</td> 
+                            <td>{$u->login}</td> 
+
+                            <td></td>  
+                            <td>
+                                 <a href="/estagio/usuario/novousuario/{$u->id}/edit"><img src="/estagio/static/img/icn_edit.png" /></a>
+                                 <a href="/estagio/usuario/novousuario/{$u->id}/delete" onClick="return confirm('Deseja realmente excluir?');"><img src="/estagio/static/img/icn_trash.png" /></a>
+                            </td> 
+                        </tr> 
+                  {/foreach}
+			</tbody> 
+			</table>
+			</div><!-- end of #tab1 -->
+			
+		<div id="tab2" class="tab_content" {if $edit == 'true'} style="display: block;" {else} style="display: none;" {/if}>
+				<div class="module_content">
+              <form action="/estagio/usuario/novousuario" method="post" name="condicao" enctype="multipart/form-data">   
+						<fieldset style="width:900px; float:left; margin-right: 2%;">
+							<!-- Inicio primeira linha -->
+                                <label style="width:9%; float:left;">Codigo</label>
+                                <label style="width:30%;float:left;">Nome*</label>
+                                <label style="width:50%;float:left;">Pefil*</label>
+                                <input style="width:6%;float:left;margin-bottom:10px"type="text"  name="id" value="{if isset($usuarios)}{$usuarios->id}{/if}" readonly="readonly">
+                               <input style="width:28%;text-transform:uppercase"type="text" maxlength="100" name="nome"  id="nome" value="{if isset($usuarios)}{$usuarios->nome}{/if}" onkeypress="return somente_txt(event);"   required="required">
+
+                               <a href="http://localhost/estagio/tipo_login/teste" rel="shadowbox;width=800;height=600;">
+                                 <input style="width:28%;float:left;margin-bottom:10px"type="hidden" name="tipo_login_id" id="tipo_login_id" value="{if isset($usuarios)}{$usuarios->tipo_login_id}{/if}" >
+                               <input style="width:28%;text-transform:uppercase"type="text" name="tipo_login_nome"  id="tipo_login_nome" value="{if isset($usuarios)}{$usuarios->tipo_login->nome}{/if}"  required="required" readonly="readonly">
+                                <div style="width:10%;float:left;margin-bottom:10px;height:30px; margin-left:11px" >
+                                	<input type="submit" value="Buscar" />
+                                </div> 
+                              </a>
+                            <!--Fim primeira linha -->                        
+                         	<!-- Inicio primeira linha -->
+                                <label style="width:35%; float:left;">Login*</label>
+                                <label style="width:30%;float:left;">Senha*</label>
+                             <!--   <label style="width:15%;float:left;">Conf. Senha</label>-->
+                                
+                                <input style="width:32%;float:left;margin-bottom:10px;text-transform:uppercase"type="text" maxlength="20"  name="login" value="{if isset($usuarios)}{$usuarios->login}{/if}"required="required">
+                                <input style="width:28%;float:left;margin-bottom:10px;text-transform:uppercase"type="password" maxlength="20"  name="senha" value="{if isset($usuarios)}{$usuarios->senha}{/if}" required="required">
+                          <!--      <input style="width:28%;float:left;margin-bottom:10px"type="text" required="required">-->
+                                
+                            
+						</fieldset>
+
+						
+			<input type="submit" value="Salvar" style="float:left">
+            
+            </form>
+<div class="clear"></div>
+				</div>
+
+		</div><!-- end of #tab2 -->
+
+			
+		</div><!-- end of .tab_container -->
+		
+		</article><!-- end of content manager article -->
+		
+		
+		<div class="clear"></div>
+		
+	
+	</section>
+
+
+</body>
+
+</html>

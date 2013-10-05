@@ -1,0 +1,221 @@
+{include file="includes/topo.html"}
+{include file="includes/menu.html"}
+
+	<section id="main" class="column">
+		
+		<article class="module width_full">
+		<header><h3 class="tabs_involved">venda</h3>
+		<ul class="tabs">
+   			<li><a href="/estagio/venda/">Lista</a></li>
+    		<li><a href="#tab2">Novo</a></li>
+		</ul>
+		</header>
+
+		<div class="tab_container">
+			<div id="tab1" class="tab_content" {if $edit == 'false'} style="display: block;" {else} style="display: none;" {/if}>
+			<table class="tablesorter" cellspacing="0"> 
+			<thead> 
+				<tr>
+				<div class="module_content">				
+					<fieldset>
+						<label>Buscar</label>
+						<input type="text">
+                        <input type="submit" value="Buscar" style="float:left">
+					</fieldset>
+				</div>					
+				</tr> 		
+				<tr> 
+   					<th></th> 
+    				<th>Número da nota</th> 
+    				<th>Número da Série</th> 
+    				<th>Cliente</th> 
+					<th></th> 
+    				<th>Ação</th> 
+				</tr> 
+			</thead> 
+			<tbody> 
+				<tr> 
+   					<td><input type="checkbox"></td> 
+    				<td>0001</td> 
+    				<td>0001</td> 
+					<td>Alexandre</td> 
+
+    				<td></td> 
+    				<td><input type="image" src="/estagio/static/img/icn_edit.png" title="Editar"><input type="image" src="/estagio/static/img/icn_trash.png" title="Excluir"></td> 
+				</tr> 
+				<tr> 
+   					<td><input type="checkbox"></td> 
+    				<td>0002</td> 
+    				<td>0002</td>
+					<td>Maria</td> 
+
+    				<td></td> 
+   				 	<td><input type="image" src="/estagio/static/img/icn_edit.png" title="Editar"><input type="image" src="/estagio/static/img/icn_trash.png" title="Excluir"></td> 
+				</tr>
+ 
+			</tbody> 
+			</table>
+			</div><!-- end of #tab1 -->
+			
+		<div id="tab2" class="tab_content" {if $edit == 'true'} style="display: block;" {else} style="display: none;" {/if}>
+				<div class="module_content">
+              <form>
+						<fieldset style="width:900px; float:left; margin-right: 2%;">
+                        	<label style="width:13%; float:left;">n° Nota</label>
+							<label style="width:12%; float:left;">Serie</label>
+							<label style="width:13%;float:left;">Codigo</label>
+							<label style="width:50%;float:left;">Cliente</label>
+                            <input style="width:10%;float:left; margin-bottom:10px"type="text" required="required">
+                            <input style="width:10%;float:left;margin-bottom:10px"type="text" required="required">
+                            <input style="width:10%;float:left;margin-bottom:10px"type="text" required="required">
+                             <input style="width:23%;float:left;margin-bottom:10px"type="text" required="required">
+                                <input type="submit" value="Buscar" style="float:left">
+							
+                            <label style="width:100%;float:left;"></label>
+
+
+                        	<label style="width:26%; float:left;">Produto</label>
+							<label style="width:10%; float:left;">Quantidade</label>
+							<label style="width:59%;float:left;">Custo</label>
+
+                             <input style="width:15%;float:left;margin-bottom:10px"type="text" required="required">
+                                <input type="submit" value="Buscar" style="float:left">
+                            <input style="width:7%;float:left; margin-bottom:10px"type="text" required="required">
+                            <input style="width:7%;float:left;margin-bottom:10px"type="text" required="required">
+
+                             <input type="submit" value="+" style="float:left">                         
+                      
+							
+                            <label style="width:100%;float:left;"></label>
+    <div style="float:left;margin-left:10px; width:95%; margin-bottom:20px; background:#FFF">	                             
+		<table class="tablesorter" cellspacing="0"> 
+			<thead> 
+				<tr>
+							
+
+							
+				</tr> 		
+				<tr> 
+    				<th>Codigo</th> 
+    				<th>Produto</th> 
+    				<th>Quantidade</th> 
+                    <th>Valor unitário</th>
+                    <th>Valor Total</th>  
+
+				</tr> 
+			</thead> 
+			<tbody> 
+
+  			<tr> 
+   					
+    				<td> Não há registros</td> 
+                    <td></td> 
+                    <td></td> 
+                    <td></td> 
+                    <td></td> 
+     		</tr>
+
+			</tbody> 
+            <thead> 
+				<tr> 
+    				<th></th> 
+    				<th></th> 
+    				<th></th> 
+					<th></th> 
+    				<th></th> 
+				</tr> 
+             </thead>            
+			</table>                                
+ </div>	                           
+                            
+                  <br />          
+
+                        	<label style="width:18%; float:left;">Total Produtos</label>
+                            <label style="width:9%;float:left;">Desconto</label>
+                            <label style="width:10%;float:left;">Total Nota</label>
+                             <label style="width:100%;float:left; height:1px"></label> 
+                             <input style="width:15%;float:left;margin-bottom:10px"type="text" required="required">
+
+                            <input style="width:7%;float:left; margin-bottom:10px"type="text" required="required">
+                            <input style="width:7%;float:left;margin-bottom:10px"type="text" required="required">
+                     				
+                            <label style="width:100%;float:left;"></label> 
+	
+                        	<label style="width:18%; float:left;">Forma de Pagamento</label>
+							<label style="width:7%; float:left;">Codigo</label>
+							<label style="width:55%;float:left;">Condicao de Pagamento</label>
+                            
+                             <input style="width:15%;float:left;margin-bottom:10px"type="text" required="required">
+             <input style="width:5%;float:left;margin-bottom:10px"type="text" required="required">
+                            <input style="width:20%;float:left;margin-bottom:10px"type="text" required="required">
+                            <input type="submit" value="Pesquisa" style="float:left">  
+                            <input type="submit" value="Gerar" style="float:left">        			
+                            <label style="width:100%;float:left;"></label>     						
+							
+ 
+ <div style="float:left;margin-left:10px; width:95%; margin-bottom:20px; background:#FFF">	                             
+		<table class="tablesorter" cellspacing="0"> 
+			<thead> 
+				<tr>
+							
+
+							
+				</tr> 		
+				<tr> 
+    				<th>Numero</th> 
+    				<th>Dias</th> 
+    				<th>Percentual</th> 
+                    <th>Data</th>
+				</tr> 
+			</thead> 
+			<tbody> 
+
+  			<tr> 
+   					
+    				<td> Não há registros</td> 
+                    <td></td> 
+                    <td></td> 
+                    <td></td> 
+     		</tr>
+
+			</tbody> 
+            <thead> 
+				<tr> 
+    				<th></th> 
+    				<th></th> 
+    				<th></th> 
+					<th></th> 
+    				<th></th> 
+				</tr> 
+             </thead>            
+			</table>                                
+ </div>	                           
+                           
+						</fieldset>
+
+						
+			<input type="submit" value="Salvar" style="float:left">
+            
+            </form>
+            </form>
+
+<div class="clear"></div>
+				</div>
+
+		</div><!-- end of #tab2 -->
+
+			
+		</div><!-- end of .tab_container -->
+		
+		</article><!-- end of content manager article -->
+		
+		
+		<div class="clear"></div>
+		
+	
+	</section>
+
+
+</body>
+
+</html>

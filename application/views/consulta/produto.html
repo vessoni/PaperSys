@@ -1,0 +1,154 @@
+{include file="includes/topo.html"}
+{include file="includes/menu.html"}
+<link rel="stylesheet" type="text/css" href="http://localhost/estagio/static/js/shadowbox.css">
+<script type="text/javascript" src="http://localhost/estagio/static/js/shadowbox.js"></script>
+<script type="text/javascript" src="http://localhost/estagio/static/js/validacao.js"></script>
+<script type="text/javascript">
+Shadowbox.init({  
+	language: 'pt',  
+	player: ['img', 'html', 'swf']  
+});
+{literal}
+jQuery(function($){
+   $("#cpf").mask("999.999.999-99");
+   $("#cep").mask("99999-999"); 
+   $("#data_nascimento").mask("9999-99-99"); 
+    $("#data_admissao").mask("9999-99-99"); 
+	 $("#data_demissao").mask("9999-99-99"); 
+   $("#tel").mask("(99)9999-9999"); 
+   $("#tel1").mask("(99)9999-9999");
+   $("#tel2").mask("(99)9999-9999");
+   $("#money").mask('000.000.000.000.000,00', {reverse: true});
+    $("#money2").mask('000.000.000.000.000,00', {reverse: true});
+ });
+{/literal}
+</script>
+	<section id="main" class="column">
+		
+		<article class="module width_full">
+		<header><h3 class="tabs_involved">Produto</h3>
+		<ul class="tabs">
+   			<li><a href="/estagio/produto/">Lista</a></li>
+    		<li><a href="#tab2">Novo</a></li>
+		</ul>
+		</header>
+
+		<div class="tab_container">
+			<div id="tab1" class="tab_content" {if $edit == 'false'} style="display: block;" {else} style="display: none;" {/if}>
+			<table class="tablesorter" cellspacing="0"> 
+			<thead> 
+				<tr>
+				<div class="module_content">				
+					<fieldset>
+						<label>Buscar</label>
+						<input type="text">
+                        <input type="submit" value="Buscar" style="float:left">
+					</fieldset>
+				</div>					
+				</tr> 		
+				<tr> 
+   					<th></th> 
+    				<th>Codigo</th> 
+    				<th>Produto</th> 
+                    <th>Grupo</th> 
+                    <th>Marca</th> 
+					<th></th> 
+    				<th>Ação</th> 
+				</tr> 
+			</thead> 
+			<tbody> 
+			  {foreach from = $produto item=c}
+                    <tr> 
+                        <td><input type="checkbox"></td> 
+                        <td>{$c->id}</td> 
+                        <td>{$c->descricao|upper}</td> 
+                        <td>{$c->grupo->nome|upper}</td> 
+                         <td>{$c->marca->nome|upper}</td> 
+                       	<td></td>  
+                        <td>
+                             <a href="/estagio/produto/novoproduto/{$c->id}/edit"><img src="/estagio/static/img/icn_edit.png" /></a>
+                             <a href="/estagio/produto/novoproduto/{$c->id}/delete" onClick="return confirm('Deseja realmente excluir?');"><img src="/estagio/static/img/icn_trash.png" /></a>
+                        </td> 
+                    </tr> 
+              {/foreach}
+			</tbody> 
+			</table>
+			</div><!-- end of #tab1 -->
+			
+		<div id="tab2" class="tab_content" {if $edit == 'true'} style="display: block;" {else} style="display: none;" {/if}>
+				<div class="module_content">
+               <form action="/estagio/produto/novoproduto" method="post" enctype="multipart/form-data">    
+						<fieldset style="width:900px; float:left; margin-right: 2%;">
+							<!-- Inicio primeira linha -->
+                                <label style="width:9%; float:left;">Codigo</label>
+                                <label style="width:30%;float:left;">Descricao*</label>
+                                <label style="width:55%;float:left;"></label>
+                                <input style="width:6%;float:left;margin-bottom:10px" type="text" name="id" value="{if isset($produtos)}{$produtos->id}{/if}" readonly="readonly">
+                                <input style="width:38%;float:left;margin-bottom:10px;text-transform:uppercase" maxlength="30" type="text" name="descricao" value="{if isset($produtos)}{$produtos->descricao}{/if}" required="required">
+                               	 <label style="width:100%;height: 5px;float:left;"></label>
+                                 <!--Fim primeira linha -->                        
+                         	<!-- Inicio primeira linha -->
+   								<label style="width:16%; float:left;">Codigo de Barras</label>
+                             	  <label style="width:15%;float:left;">Referência</label>
+                                <label style="width:32%;float:left;">Marca*</label>
+                                 <label style="width:20%;float:left;">Grupo*</label>
+                                <input style="width:13%;float:left;margin-bottom:10px;text-transform:uppercase" maxlength="30"type="text" onkeypress="return SomenteNumero(event);" name="codigo_barras" value="{if isset($produtos)}{$produtos->codigo_barras}{/if}" required="required">
+                                <input style="width:13%;float:left;margin-bottom:10px;text-transform:uppercase" maxlength="20"type="text" name="referencia"value="{if isset($produtos)}{$produtos->referencia}{/if}" required="required">
+                                <a href="http://localhost/estagio/marca/teste" rel="shadowbox;width=800;height=600;">
+                                   <input style="width:15%;float:left;margin-bottom:10px"type="hidden" id="marca_id" name="marca_id" value="{if isset($produtos)}{$produtos->marca->id}{/if}">
+                                   <input style="width:18%;float:left; margin-bottom:10px;text-transform:uppercase"type="text"name="marca_nome" id="marca_nome" value="{if isset($produtos)}{$produtos->marca->nome}{/if}" required="required" readonly="readonly">
+                                     <div style="width:10%;float:left;margin-bottom:10px;height:20px; margin-left:11px" >
+                                        <input type="submit" value="Buscar" />
+                                    </div> 
+                                 </a>
+                                 <a href="http://localhost/estagio/grupo/teste" rel="shadowbox;width=800;height=600;">
+                               		<input style="width:15%;float:left;margin-bottom:10px"type="hidden" id="grupo_id" name="grupo_id" value="{if isset($produtos)}{$produtos->grupo->id}{/if}">
+                                    <input style="width:18%;float:left; margin-bottom:10px;text-transform:uppercase"type="text"id="grupo_nome" name="grupo_nome"value="{if isset($produtos)}{$produtos->grupo->nome}{/if}" required="required" readonly="readonly">
+                                     <div style="width:10%;float:left;margin-bottom:10px;height:20px; margin-left:11px" >
+                                        <input type="submit" value="Buscar" />
+                                    </div>      
+                                </a>                           
+                                
+                                 <label style="width:100%;height: 5px;float:left;"></label>
+                            <!--Fim primeira linha -->
+                            <!-- Inicio Segunda linha -->
+   								<label style="width:21%; float:left;">Valor de Custo</label>
+                             	  <label style="width:20%;float:left;">Valor de Venda</label>
+                                <label style="width:20%;float:left;">Estoque mínimo</label>
+                                 <label style="width:21%;float:left;">Estoque atual</label>
+                                <input style="width:18%;float:left;margin-bottom:10px"type="text" name="valor_custo" onkeypress="return SomenteNumero(event);" id="money" value="{if isset($produtos)}{$produtos->valor_custo}{/if}" required="required">
+                                <input style="width:18%;float:left;margin-bottom:10px"type="text" name="valor_venda" onkeypress="return SomenteNumero(event);"  id="money2" value="{if isset($produtos)}{$produtos->valor_venda}{/if}" required="required">
+                                <input style="width:18%;float:left; margin-bottom:10px"type="text" maxlength="10" name="estoque_min" onkeypress="return SomenteNumero(event);" value="{if isset($produtos)}{$produtos->estoque_min}{/if}" required="required">
+                                <input style="width:18%;float:left; margin-bottom:10px"type="text" maxlength="10" name="estoque_atual" onkeypress="return SomenteNumero(event);" value="{if isset($produtos)}{$produtos->estoque_atual}{/if}" required="required">
+                              
+                                
+                                                     <!-- Inicio Setima linha -->   
+
+                            <!-- Fim Setima linha --> 
+                            
+						</fieldset>
+
+						
+			<input type="submit" value="Salvar" style="float:left">
+            
+            </form>
+<div class="clear"></div>
+				</div>
+
+		</div><!-- end of #tab2 -->
+
+			
+		</div><!-- end of .tab_container -->
+		
+		</article><!-- end of content manager article -->
+		
+		
+		<div class="clear"></div>
+		
+	
+	</section>
+
+
+</body>
+
+</html>

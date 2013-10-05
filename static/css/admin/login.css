@@ -1,0 +1,67 @@
+/* CSS Document */
+
+body{
+	background:url('http://localhost/radiocidadev1/static/img/login/bg_login.jpg') no-repeat;	
+	font-family: 'Roboto Condensed', sans-serif;
+}
+.caixa_login{
+		background:#BDC6CD;
+		border:3px solid #FFF;
+		border-radius:5px;
+}
+	
+	/*Caixas de logar*/
+	.caixa_login input[type=text], input[type=password] {
+		background:#C2CDD3;
+		border:1px solid #7C8388;
+		border-radius:5px;
+		padding:10px;	
+		font-size:14px;
+		color:#FFF;
+		font-family: 'Roboto Condensed', sans-serif;
+	}
+			.caixa_login input[type=text]:hover, input[type=password]:hover {
+			background:#DEE3E7;
+			border:1px solid #7C8388;
+			border-radius:5px;
+			padding:10px;	
+			font-size:14px;
+			color:#000;
+			font-family: 'Roboto Condensed', sans-serif;
+			}
+
+	/*Botão logar*/
+	.bt_logar{
+		background:#B9D972;	
+		border:1px solid #769728;
+		border-radius:5px;
+		padding:10px;
+		font-size:18px;
+		text-align:center;
+		color:#769728;
+	}
+
+		.bt_logar:hover{
+			background:#8AB130;	
+			border:1px solid #769728;
+			border-radius:5px;
+			padding:10px;
+			font-size:18px;
+			text-align:center;
+			color:#fff;
+			cursor:pointer;
+		}
+
+	.msg_powered{
+		font-size:12px;
+		color:#FFF;
+		text-align:center;
+	}	
+		.msg_powered a{
+			text-decoration:none;
+			color:#FFF;	
+		}
+		.msg_powered a:hover{
+			text-decoration:underline;
+			color:#FFF;	
+		}

@@ -1,0 +1,33 @@
+.campo{width:75px;}
+.dias > .dia{
+	text-align:center;
+	float:left;
+	width:105px;
+	background:#9BA8B3;
+	color:#FFF;
+	font-size:14px;
+	border-radius:3px;
+}
+.dias > .dia > .nome{
+	font-weight:bold;
+	border:1px solid #7C8388;
+	border-radius:3px;
+	margin-right:1px;
+}
+.dias > .dia > .linha{
+	border:1px solid #000;
+	width:98%;
+	float:left;
+	margin-top:1px;
+	border:1px solid #7C8388;
+	border-radius:3px;
+	font-size:13px;
+}
+.dias > .dia > .linha > div{
+	width:100%;
+	float:left;
+}
+.dias > .dia > .linha > div > .celula{
+	width:50%;
+	float:left;
+}

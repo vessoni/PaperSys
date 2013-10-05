@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt">
+
+<head>
+	<meta charset="utf-8"/>
+	<title>SYSPAPER</title>
+	
+	<link rel="stylesheet" href="/estagio/static/css/interna.css" type="text/css" media="screen" />
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" />
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<script src="/estagio/static/js/jquery-1.5.2.min.js" type="text/javascript"></script>
+	<script src="/estagio/static/js/hideshow.js" type="text/javascript"></script>
+	<script src="/estagio/static/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/estagio/static/js/jquery.equalHeight.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() 
+    	{ 
+      	  $(".tablesorter").tablesorter(); 
+   	 } 
+	);
+	$(document).ready(function() {
+
+	//When page loads...
+	$(".tab_content").hide(); //Hide all content
+	{if $edit == 'true'}
+		$("ul.tabs li:eq(1)").addClass("active").show(); //Activate first tab
+		$(".tab_content:eq(1)").show(); //Show first tab content
+    {else}
+		$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+		$(".tab_content:first").show(); //Show first tab content
+	{/if}
+	//On Click Event
+	$("ul.tabs li").click(function() {
+
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+
+		var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active ID content
+		return false;
+	});
+
+});
+{literal}
+    </script>
+    <script type="text/javascript">
+    $(function(){
+        $('.column').equalHeight();
+    });
+</script>
+{/literal}
+{literal}
+<script type="text/javascript">
+	$(document).ready(function(){}); 
+	function setVal(codigo,nome){
+		parent.$('input#cargo_id').val(codigo);
+		parent.$('input#cargo').val(nome);
+
+		parent.window.Shadowbox.close( );
+	}
+
+</script>
+<link rel="stylesheet" type="text/css" href="http://localhost/estagio/static/js/shadowbox.css">
+<script type="text/javascript" src="http://localhost/estagio/static/js/shadowbox.js"></script>
+<script type="text/javascript">
+Shadowbox.init({  
+	language: 'pt',  
+	player: ['img', 'html', 'swf']  
+});
+</script>
+
+<script language="javascript">
+function somente_txt(par_tecla)
+{
+         var var_tecla = par_tecla.keyCode ? par_tecla.keyCode : par_tecla.which;
+         /* Tecla Backspace */
+         if (var_tecla == 8)
+                  {return true;}
+         if (var_tecla == 9)
+                  {return true;}				  
+         /* Tecla Space */
+         if (var_tecla == 32)
+                  {return true;}
+         /* Teclas a-z e A-Z */
+         if ((var_tecla > 64 && var_tecla < 91) || (var_tecla > 96 && var_tecla < 123))
+                  {return true;}
+         /* Teclas acentuadas e cidilha */
+         if ((var_tecla > 191 && var_tecla < 221) || (var_tecla > 223 && var_tecla < 253))
+                  {return true;}
+         return false;
+}
+
+</script> 
+{/literal}
+
+
+</head>
+	
+	<section id="main" class="column">
+		
+		<article class="module width_full">
+		<header><h3 class="tabs_involved">Cargo</h3>
+		<ul class="tabs">
+   			<li><a href="#tab1">Lista</a></li>
+    		<li><a href="#tab2">Novo</a></li>
+		</ul>
+		</header>
+
+		<div class="tab_container">
+			<div id="tab1" class="tab_content" {if $edit == 'false'} style="display: block;" {else} style="display: none;" {/if}>
+			<table class="tablesorter" cellspacing="0"> 
+			<thead> 
+				<tr>
+				<div class="module_content">				
+					<fieldset>
+						<label>Buscar</label>
+						<input type="text">
+                        <input type="submit" value="Buscar" style="float:left">
+					</fieldset>
+				</div>					
+				</tr> 		
+				<tr> 
+   					<th></th> 
+    				<th>Codigo</th> 
+    				<th>Cargo</th> 
+					<th></th> 
+    				<th>Ação</th> 
+				</tr> 
+			</thead> 
+			<tbody> 
+				 {foreach from = $cargo item=c}
+                    <tr> 
+                        <td><a href="javascript:void(0);" onClick="setVal('{$c->id}','{$c->nome}')"><input type="checkbox"></a></td> 
+                        <td>{$c->id}</td> 
+                        <td>{$c->nome|upper}</td> 
+                       	<td></td>  
+                        <td>
+                             <a href="/estagio/cargo/novocargo/{$c->id}/edit"><img src="/estagio/static/img/icn_edit.png" /></a>
+                             <a href="/estagio/cargo/novocargo/{$c->id}/delete" onClick="return confirm('Deseja realmente excluir?');"><img src="/estagio/static/img/icn_trash.png" /></a>
+                        </td> 
+                    </tr> 
+              {/foreach}
+			</tbody> 
+			</table>
+			</div><!-- end of #tab1 -->
+			
+		<div id="tab2" class="tab_content" {if $edit == 'true'} style="display: block;" {else} style="display: none;" {/if}>
+				<div class="module_content">
+             <form action="/estagio/cargo/novocargointerna" method="post" enctype="multipart/form-data"> 
+                <fieldset style="float: left; margin-right: 2%; width: 400px;">
+                    <label style="float: left; width: 18%;">Codigo</label>
+                    <label style="float: left; width: 70%;">Cargo</label>
+                    <input type="text" required style="float: left; margin-bottom: 10px; width: 11%;"  value="{if isset($cargos)}{$cargos->id}{/if}"  name="id" readonly>
+                    <input type="text" required style="float: left; margin-bottom: 10px; width: 70%;text-transform:uppercase;" maxlength="40" onkeypress="return somente_txt(event);"  value="{if isset($cargos)}{$cargos->nome}{/if}"  name="cargo" required="required">
+                </fieldset>
+
+						
+			<input type="submit" value="Salvar" style="float:left">
+            
+            </form>
+<div class="clear"></div>
+				</div>
+
+		</div><!-- end of #tab2 -->
+
+			
+		</div><!-- end of .tab_container -->
+		
+		</article><!-- end of content manager article -->
+		
+		
+		<div class="clear"></div>
+		
+	
+	</section>
+
+</body>
+
+</html>

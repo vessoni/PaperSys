@@ -1,0 +1,85 @@
+{include file="includes/topo.html"}
+{include file="includes/menu.html"}
+
+	<section id="main" class="column">
+		
+		<article class="module width_full">
+		<header><h3 class="tabs_involved">Marca</h3>
+		<ul class="tabs">
+   			<li><a href="/estagio/grupo/">Lista</a></li>
+    		<li><a href="#tab2">Novo</a></li>
+		</ul>
+		</header>
+
+		<div class="tab_container">
+			<div id="tab1" class="tab_content" {if $edit == 'false'} style="display: block;" {else} style="display: none;" {/if}>
+			<table class="tablesorter" cellspacing="0"> 
+			<thead> 
+				<tr>
+				<div class="module_content">				
+					<fieldset>
+						<label>Buscar</label>
+						<input type="text">
+                        <input type="submit" value="Buscar" style="float:left">
+					</fieldset>
+				</div>					
+				</tr> 		
+				<tr> 
+   					<th></th> 
+    				<th>Codigo</th> 
+    				<th>Marca</th> 
+					<th></th> 
+    				<th>Ação</th> 
+				</tr> 
+			</thead> 
+			<tbody> 
+				 {foreach from = $marca item=c}
+                    <tr> 
+                        <td><input type="checkbox"></td> 
+                        <td>{$c->id}</td> 
+                        <td>{$c->nome|upper}</td> 
+                       	<td></td>  
+                        <td>
+                             <a href="/estagio/marca/novomarca/{$c->id}/edit"><img src="/estagio/static/img/icn_edit.png" /></a>
+                             <a href="/estagio/marca/novomarca/{$c->id}/delete" onClick="return confirm('Deseja realmente excluir?');"><img src="/estagio/static/img/icn_trash.png" /></a>
+                        </td> 
+                    </tr> 
+              {/foreach}
+			</tbody> 
+			</table>
+			</div><!-- end of #tab1 -->
+			
+		<div id="tab2" class="tab_content" {if $edit == 'true'} style="display: block;" {else} style="display: none;" {/if}>
+				<div class="module_content">
+             <form action="/estagio/marca/novomarca" method="post" enctype="multipart/form-data"> 
+                <fieldset style="float: left; margin-right: 2%; width: 400px;">
+                    <label style="float: left; width: 18%;">Codigo</label>
+                    <label style="float: left; width: 70%;">Marca*</label>
+                    <input type="text" required="required" style="float: left; margin-bottom: 10px; width: 11%;"  value="{if isset($marcas)}{$marcas->id}{/if}"  name="id" readonly="readonly">
+                    <input type="text" required="required" style="float: left; margin-bottom: 10px; width: 70%;text-transform:uppercase" maxlength="30"  value="{if isset($marcas)}{$marcas->nome}{/if}"  name="marca">
+                </fieldset>
+
+						
+			<input type="submit" value="Salvar" style="float:left">
+            
+            </form>
+<div class="clear"></div>
+				</div>
+
+		</div><!-- end of #tab2 -->
+
+			
+		</div><!-- end of .tab_container -->
+		
+		</article><!-- end of content manager article -->
+		
+		
+		<div class="clear"></div>
+		
+	
+	</section>
+
+
+</body>
+
+</html>
